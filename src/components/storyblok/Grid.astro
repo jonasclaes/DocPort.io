@@ -1,0 +1,21 @@
+---
+import type { GridStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+
+type Props = {
+  blok: GridStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<div {...storyblokEditable(blok)}>
+  <div>
+    {
+      blok.columns?.map((blok) => {
+        return <StoryblokComponent blok={blok} />;
+      })
+    }
+  </div>
+</div>

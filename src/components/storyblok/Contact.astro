@@ -1,0 +1,24 @@
+---
+import type { ContactStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+import Section from "../Section.astro";
+import SectionTitle from "../SectionTitle.astro";
+import Form from "../Form.astro";
+
+type Props = {
+  blok: ContactStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<Section id="contact" {...storyblokEditable(blok)}>
+  <div class="mb-[140px] relative">
+    {
+      blok.sectionTitle && blok.sectionTitle.length > 0 && (
+        <SectionTitle blok={blok.sectionTitle[0]} />
+      )
+    }
+    <Form />
+  </div>
+</Section>

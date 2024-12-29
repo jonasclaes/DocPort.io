@@ -1,0 +1,24 @@
+---
+import type { ProcessStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+import Section from "../Section.astro";
+import SectionTitle from "../SectionTitle.astro";
+import Accordion from "../Accordion.astro";
+
+type Props = {
+  blok: ProcessStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<Section id="process" {...storyblokEditable(blok)}>
+  <div class="mt-[140px]">
+    {
+      blok.sectionTitle && blok.sectionTitle.length > 0 && (
+        <SectionTitle blok={blok.sectionTitle[0]} />
+      )
+    }
+    <Accordion />
+  </div>
+</Section>

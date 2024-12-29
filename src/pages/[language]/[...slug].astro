@@ -1,0 +1,72 @@
+---
+import type {
+  GetStaticPaths,
+  GetStaticPathsItem,
+  GetStaticPathsResult,
+} from "astro";
+import { useStoryblokApi } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { ISbLink } from "@/storyblok-types/storyblok";
+
+export const getStaticPaths = (async (): Promise<GetStaticPathsResult> => {
+  const DEFAULT_LANGUAGE = "en";
+  const storyblokApi = useStoryblokApi();
+
+  const links: ISbLink[] = await storyblokApi.getAll("cdn/links", {
+    version: "draft",
+  });
+
+  const { data: spaceData } = await storyblokApi.get("cdn/spaces/me", {});
+  const space = spaceData.space;
+  const languages: string[] = [DEFAULT_LANGUAGE, ...space.language_codes];
+
+  const staticPaths: GetStaticPathsItem[] = [];
+
+  links
+    .filter((link) => !link.is_folder)
+    .forEach((link) => {
+      languages.forEach((language) => {
+        const slug = link.slug;
+
+        let languageSwitch = {};
+
+        languages.forEach((language) => {
+          languageSwitch = {
+            ...languageSwitch,
+            [language]: `/${language}/${slug ?? ""}`,
+          };
+        });
+
+        staticPaths.push({
+          props: {
+            langSwitch: languageSwitch,
+          },
+          params: {
+            slug,
+            language,
+          },
+        });
+      });
+    });
+
+  return staticPaths;
+}) satisfies GetStaticPaths;
+
+const { language, slug } = Astro.params as {
+  language: string;
+  slug: string;
+};
+
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
+  version: "draft",
+  language,
+});
+
+const story = data.story;
+---
+
+<BaseLayout language={language} title={story.name}>
+  <StoryblokComponent blok={story.content} />
+</BaseLayout>

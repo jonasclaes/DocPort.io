@@ -1,0 +1,26 @@
+---
+import type { ServicesStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+import Section from "../Section.astro";
+import SectionTitle from "../SectionTitle.astro";
+import ServiceCard from "../ServiceCard.astro";
+
+type Props = {
+  blok: ServicesStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<Section id="services" {...storyblokEditable(blok)}>
+  <div class="mt-[140px] mb-5">
+    {
+      blok.sectionTitle && blok.sectionTitle.length > 0 && (
+        <SectionTitle blok={blok.sectionTitle[0]} />
+      )
+    }
+    <div class="grid lg:grid-cols-2 lg:grid-rows-3 gap-10">
+      {blok.services?.map((service) => <ServiceCard blok={service} />)}
+    </div>
+  </div>
+</Section>

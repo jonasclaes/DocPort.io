@@ -1,0 +1,23 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+import type { SectionTitleStoryblok } from "@/storyblok-types/component-types";
+
+type Props = {
+  blok: SectionTitleStoryblok;
+};
+
+const { blok } = Astro.props;
+const { title, description } = blok;
+---
+
+<div
+  class="flex flex-col items-center gap-10 mb-20 sm:flex-row"
+  {...storyblokEditable(blok)}
+>
+  <h2 class="greenhead text-center sm:text-left text-3xl sm:text-4xl">
+    {title}
+  </h2>
+  <p class="w-auto text-center sm:text-left sm:w-[580px]">
+    {description}
+  </p>
+</div>

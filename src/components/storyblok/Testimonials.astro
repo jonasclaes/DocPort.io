@@ -1,0 +1,26 @@
+---
+import type { TestimonialsStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+import Section from "../Section.astro";
+import SectionTitle from "../SectionTitle.astro";
+import SwiperSlider from "../SwiperSlider.astro";
+
+type Props = {
+  blok: TestimonialsStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<Section id="testimonials" {...storyblokEditable(blok)}>
+  <div class="mt-20">
+    {
+      blok.sectionTitle && blok.sectionTitle.length > 0 && (
+        <SectionTitle blok={blok.sectionTitle[0]} />
+      )
+    }
+    <div class="rounded-[45px] bg-dark mb-[150px] text-gray">
+      <SwiperSlider />
+    </div>
+  </div>
+</Section>

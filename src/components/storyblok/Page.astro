@@ -1,0 +1,19 @@
+---
+import type { PageStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+
+type Props = {
+  blok: PageStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<main {...storyblokEditable(blok)}>
+  {
+    blok.body?.map((blok) => {
+      return <StoryblokComponent blok={blok} />;
+    })
+  }
+</main>

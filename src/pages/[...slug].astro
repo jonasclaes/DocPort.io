@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+
+const { slug } = Astro.params as {
+  slug: string;
+};
+
+return Astro.redirect(`/en/${slug}`);
+---

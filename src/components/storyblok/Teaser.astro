@@ -1,0 +1,16 @@
+---
+import type { TeaserStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+
+type Props = {
+  blok: TeaserStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<div {...storyblokEditable(blok)}>
+  <h3>
+    {blok.headline}
+  </h3>
+</div>

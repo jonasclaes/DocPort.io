@@ -1,0 +1,35 @@
+---
+import type { SponsorsStoryblok } from "@/storyblok-types/component-types";
+import { storyblokEditable } from "@storyblok/astro";
+import { Image } from "astro:assets";
+import Section from "../Section.astro";
+
+type Props = {
+  blok: SponsorsStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<Section id="sponsors" {...storyblokEditable(blok)}>
+  <div class="flex-row items-center">
+    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6">
+      {
+        blok.logos?.map((sponsor) => {
+          return (
+            <div class="p-4 grayscale transition duration-200 hover:grayscale-0">
+              <Image
+                src={sponsor.filename ?? ""}
+                alt={sponsor.alt}
+                class="h-12 w-auto mx-auto"
+                loading="lazy"
+                inferSize={true}
+                format={sponsor.content_type}
+              />
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</Section>
