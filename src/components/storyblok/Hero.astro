@@ -29,26 +29,30 @@ const { blok } = Astro.props;
           class="w-full justify-center md:justify-start items-center inline-flex"
         >
           {
-            blok.call_to_action_link &&
-              blok.call_to_action_link.linktype === "story" && (
+            blok.callToAction &&
+              blok.callToAction.length > 0 &&
+              blok.callToAction[0].link?.linktype === "story" && (
                 <a
-                  href={blok.call_to_action_link.cached_url}
+                  href={blok.callToAction[0].link?.cached_url}
                   class="px-8 py-5 bg-zinc-900 hover:bg-white rounded-2xl text-center text-white hover:text-black border text-xl font-normal leading-7"
+                  {...storyblokEditable(blok.callToAction[0])}
                 >
-                  {blok.call_to_action_text}
+                  {blok.callToAction[0].text}
                 </a>
               )
           }
           {
-            blok.call_to_action_link &&
-              blok.call_to_action_link.linktype === "url" && (
+            blok.callToAction &&
+              blok.callToAction.length > 0 &&
+              blok.callToAction[0].link?.linktype === "url" && (
                 <a
-                  href={blok.call_to_action_link.url}
+                  href={blok.callToAction[0].link?.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="px-8 py-5 bg-zinc-900 hover:bg-white rounded-2xl text-center text-white hover:text-black border text-xl font-normal leading-7"
+                  {...storyblokEditable(blok.callToAction[0])}
                 >
-                  {blok.call_to_action_text}
+                  {blok.callToAction[0].text}
                 </a>
               )
           }
