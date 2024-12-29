@@ -4,6 +4,7 @@ import greenOnBlackArrowUp from "../assets/icon6.svg";
 import whiteOnBlackArrowUp from "../assets/icon7.svg";
 import type { ServiceStoryblok } from "@/storyblok-types/component-types";
 import Card from "./Card.astro";
+import { storyblokEditable } from "@storyblok/astro";
 
 /* 
 1. Gray card with green title and green on black icon 
@@ -24,7 +25,7 @@ const hasImage =
   image.filename.length > 0;
 ---
 
-<Card isUnderline={true}>
+<Card isUnderline={true} {...storyblokEditable(blok)}>
   <div
     class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid custom-grid lg:grid-cols-2 lg:grid-rows-1 p-8 sm:p-[50px] rounded-[45px] ${style === 'gray' ? 'bg-gray' : style === 'green' ? 'bg-green' : 'bg-dark text-gray'}`
   >
